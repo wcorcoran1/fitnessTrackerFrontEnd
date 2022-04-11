@@ -17,6 +17,7 @@ const NavBar = ({ token }) => {
           <>
             <Link to={"/sign-up"}>Sign Up</Link>
           </>
+          <Link to={"/Login"}>Login</Link>
         </div>
       </div>
     </div>

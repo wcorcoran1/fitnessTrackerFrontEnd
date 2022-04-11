@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -25,6 +26,10 @@ const App = () => {
         <Route
           path="/sign-up"
           element={<SignUp token={token} setToken={setToken} />}
+        />
+        <Route
+          path="/Login"
+          element={<Login />}
         />
       </Routes>
     </div>
