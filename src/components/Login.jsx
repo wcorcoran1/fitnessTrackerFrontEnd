@@ -8,26 +8,20 @@ const Login = ({ setToken }) => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    try {
-      const result = await userLogin(username, password);
-      localStorage.setItem("token", await result.data.token);
-      setToken(result.data.token);
-      setLoginStatus(true);
-    } catch (error) {
-      console.error(error, "Trouble with Login...");
-      throw error;
-    }
+    const result = await userLogin(username, password);
+    console.log(result, "@@@@@@@@@@@@@@")
+    localStorage.setItem("token", result.token);
+    // console.log(localStorage, "Token added!")
+    setLoginStatus(true);
   };
+
   const onLogOut = async (e) => {
     e.preventDefault();
-    try {
-      localStorage.removeItem("token");
-      setLoginStatus(false);
-    } catch (error) {
-      console.error(error, "Trouble in LogOut....");
-      throw error;
-    }
+    localStorage.removeItem("token");
+    console.log(localStorage, "Token removed!")
+    setLoginStatus(false);
   };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setLoginStatus(true);
@@ -36,10 +30,14 @@ const Login = ({ setToken }) => {
 
   return (
     <div>
-        {!loginStatus ? (
-            <button onClick={onLogin}>Login</button>) :( <button onClick={onLogOut}>Logout</button>
-        )}
-      <form onSubmit={Login}>
+    {loginStatus ? (
+      <button onClick={onLogOut}>Log Out</button>
+    ) : (
+      <form
+        onSubmit={(e) => {
+          onLogin(e);
+        }}
+      >
         <input
           value={username}
           type="text"
@@ -58,8 +56,9 @@ const Login = ({ setToken }) => {
         />
         <button type="submit">Login</button>
       </form>
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default Login;
