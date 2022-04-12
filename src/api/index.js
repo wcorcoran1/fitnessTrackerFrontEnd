@@ -49,7 +49,7 @@ export const myData = async (token) => {
   }
 };
 
-export const userRoutine = async (token) => {
+export const userRoutine = async (username, token) => {
   if (token) {
     const response = await fetch(`${apiURL}users/${username}/routines`, {
       headers: {
@@ -69,3 +69,10 @@ export const userRoutine = async (token) => {
     return data
   }
 };
+
+export const getActivities = async ()=>{
+  const response = await fetch(`${apiURL}activities`)
+  const data = response.json()
+  return data
+}
+

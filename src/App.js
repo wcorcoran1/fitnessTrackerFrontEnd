@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+import Activities from "./components/Activities";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -26,6 +27,10 @@ const App = () => {
         <Route
           path="/Login"
           element={<Login />}
+        />
+         <Route
+          path="/activities"
+          element={<Activities />}
         />
       </Routes>
     </div>
