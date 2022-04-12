@@ -9,16 +9,15 @@ const Login = ({ setToken }) => {
   const onLogin = async (e) => {
     e.preventDefault();
     const result = await userLogin(username, password);
-    console.log(result, "@@@@@@@@@@@@@@")
     localStorage.setItem("token", result.token);
-    // console.log(localStorage, "Token added!")
-    setLoginStatus(true);
+    console.log(localStorage, "Token added!")
+    setLoginStatus(true)
   };
 
   const onLogOut = async (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
-    console.log(localStorage, "Token removed!")
+    console.log(localStorage, "Token removed!");
     setLoginStatus(false);
   };
 
@@ -30,35 +29,35 @@ const Login = ({ setToken }) => {
 
   return (
     <div>
-    {loginStatus ? (
-      <button onClick={onLogOut}>Log Out</button>
-    ) : (
-      <form
-        onSubmit={(e) => {
-          onLogin(e);
-        }}
-      >
-        <input
-          value={username}
-          type="text"
-          placeholder="username"
-          onChange={(e) => {
-            setUsername(e.target.value);
+      {loginStatus ? (
+        <button onClick={onLogOut}>Log Out</button>
+      ) : (
+        <form
+          onSubmit={(e) => {
+            onLogin(e);
           }}
-        />
-        <input
-          value={password}
-          type="text"
-          placeholder="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <button type="submit">Login</button>
-      </form>
-    )}
-  </div>
-);
+        >
+          <input
+            value={username}
+            type="text"
+            placeholder="username"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <input
+            value={password}
+            type="text"
+            placeholder="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <button type="submit">Login</button>
+        </form>
+      )}
+    </div>
+  );
 };
 
 export default Login;

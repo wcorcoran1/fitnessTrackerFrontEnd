@@ -19,7 +19,7 @@ export const registerUser = async (username, password) => {
 export const userLogin = async (username, password) => {
   const response = await fetch(`${apiURL}users/login`, {
     method: "POST",
-    header: {
+    headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -27,7 +27,45 @@ export const userLogin = async (username, password) => {
       password,
     }),
   });
-  console.log(response, "!@#$%^%$#@");
   const data = await response.json();
   return data;
+};
+
+export const myData = async (token) => {
+  if (token) {
+    try {
+      const response = await fetch(`${apiURL}users/me`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const userRoutine = async (token) => {
+  if (token) {
+    const response = await fetch(`${apiURL}users/${username}/routines`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = response.json();
+    return data;
+  } else {
+    const response = await fetch(`${apiURL}users/${username}/routines`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = response.json()
+    return data
+  }
 };
