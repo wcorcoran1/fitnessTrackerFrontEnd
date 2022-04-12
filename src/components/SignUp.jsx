@@ -5,17 +5,13 @@ const SignUp = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSignUp = async (e) => {
+  const onSignUp = async(e) => {
     e.preventDefault();
-    try {
-      const result = await registerUser(username, password);
-      localStorage.setItem("token", await result.data.token);
-      const myToken = await result.data.token;
-      setToken(myToken);
-    } catch (error) {
-      console.error(error, "Trouble with sign up...");
-      throw error;
-    }
+    const result = await registerUser(username, password);
+    console.log(result)
+    localStorage.setItem("token", result.token);
+    const myToken = result.token;
+    setToken(myToken);
   };
 
   return (

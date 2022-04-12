@@ -10,11 +10,7 @@ const App = () => {
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
-    if (localToken) {
-      setToken(localToken);
-    } else {
-      console.log("Trouble setting token...");
-    }
+    localToken ? setToken(localToken) : console.log("Trouble setting token...");
   }, [token]);
 
   return (

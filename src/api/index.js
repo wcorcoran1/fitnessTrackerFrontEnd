@@ -1,5 +1,5 @@
 // You can choose to import all your functions, and re-export them here
-const apiURL = `http://fitnesstrac-kr.herokuapp.com/api`;
+const apiURL = `https://fitnesstrac-kr.herokuapp.com/api/`;
 
 export const registerUser = async (username, password) => {
   const response = await fetch(`${apiURL}users/register`, {
@@ -8,29 +8,64 @@ export const registerUser = async (username, password) => {
       "Content-type": "application/json",
     },
     body: JSON.stringify({
-      body: {
-        username,
-        password,
-      },
+      username,
+      password,
     }),
   });
   const data = await response.json();
   return data;
 };
 
-export const userLogin = async (username, password) =>{
-  const response = await fetch(`${apiURL}users/login`,{
+export const userLogin = async (username, password) => {
+  const response = await fetch(`${apiURL}users/login`, {
     method: "POST",
-    header: {
+    headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      user: {
       username,
       password,
-      }
-    })
-  })
+    }),
+  });
   const data = await response.json();
   return data;
-}
+};
+
+export const myData = async (token) => {
+  if (token) {
+    try {
+      const response = await fetch(`${apiURL}users/me`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
+export const userRoutine = async (token) => {
+  if (token) {
+    const response = await fetch(`${apiURL}users/${username}/routines`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = response.json();
+    return data;
+  } else {
+    const response = await fetch(`${apiURL}users/${username}/routines`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = response.json()
+    return data
+  }
+};
