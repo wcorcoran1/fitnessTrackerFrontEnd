@@ -19,8 +19,6 @@ const Activities = () => {
 
   const singleActivity =()=>{
     e.preventDefault();
-    const fetchSingleActivity = async()=>{
-      const data = await 
     }
   }
 
