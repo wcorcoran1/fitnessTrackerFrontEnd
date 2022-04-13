@@ -121,3 +121,18 @@ export const updateActivity = async (token, name, description, activityId) => {
     console.error("error", error)
   }
 }
+
+export const getPublicRoutinesByActivity = async(activityId)=>{
+  try{
+    const response = await fetch(`${apiURL}}activities/${activityId}/routines`, {
+    headers: {
+      "Content-Type": "application/json",
+    }
+    })
+    const data = response.json()
+    return data
+  } catch(error){
+    console.error("error", error)
+  }
+}
+

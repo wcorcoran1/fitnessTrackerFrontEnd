@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getActivities } from "../api";
+import { getActivities, getPublicRoutinesByActivity  } from "../api";
 import CreateActivities from "./CreateActivities";
 import UpdateActivities from "./UpdateActivities";
+
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
@@ -16,6 +17,12 @@ const Activities = () => {
     fetchActivities();
   }, []);
 
+  const singleActivity =()=>{
+    e.preventDefault();
+    const fetchSingleActivity = async()=>{
+      const data = await 
+    }
+  }
 
 
   return (
