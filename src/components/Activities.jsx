@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getActivities } from "../api";
 import CreateActivities from "./CreateActivities";
+import UpdateActivities from "./UpdateActivities";
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
@@ -29,6 +30,7 @@ const Activities = () => {
             </li>
           </ul>
           <h4>{activity.description}</h4>
+          <UpdateActivities activities={activities} setActivities={setActivities}/>
           <h2>------------------------------</h2>
         </div>
       ))}
