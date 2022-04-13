@@ -5,9 +5,7 @@ function Home () {
     return (
         <div>
           <h1 className="main_title">Hello World!!!</h1>
-          <Activities 
-          allActivities={allActivities} 
-          />
+          
         </div>
       );
 }
