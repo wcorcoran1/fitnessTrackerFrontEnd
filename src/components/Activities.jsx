@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getActivities, getPublicRoutinesByActivity  } from "../api";
 import CreateActivities from "./CreateActivities";
-import UpdateActivities from "./UpdateActivities";
+import UpdateActivity from "./UpdateActivity";
 
 
 const Activities = () => {
@@ -15,18 +15,15 @@ const Activities = () => {
       setActivities(data);
     };
     fetchActivities();
-  }, []);
-
-  const singleActivity =()=>{
-    e.preventDefault();
-    }
-  }
-
+  }, [setActivities]);
 
   return (
     <>
       <h1>Activities</h1>
-      <CreateActivities activities={activities} setActivities={setActivities}/>
+      <CreateActivities 
+        activities={activities} 
+        setActivities={setActivities}
+      />
       {activities.map((activity) => (
         <div key={activity.id}>
           <ul>
@@ -35,7 +32,12 @@ const Activities = () => {
             </li>
           </ul>
           <h4>{activity.description}</h4>
-          <UpdateActivities activities={activities} setActivities={setActivities}/>
+          <h4>View Routines with this Activity</h4>
+          {/* <UpdateActivity
+            activityId={activity.id}
+            activities={activity}
+            setActivities={setActivities}
+          /> */}
           <h2>------------------------------</h2>
         </div>
       ))}

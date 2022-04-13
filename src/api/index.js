@@ -70,12 +70,26 @@ export const userRoutine = async (username, token) => {
       return data;
     }
   } catch (error) {
-    console.error('error')
+    console.error("error");
   }
 };
 
 export const getActivities = async () => {
-  const response = await fetch(`${apiURL}activities`);
+  const response = await fetch(`${apiURL}activities`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = response.json();
+  return data;
+};
+
+export const getRoutines = async () => {
+  const response = await fetch(`${apiURL}routines`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   const data = response.json();
   return data;
 };
@@ -103,9 +117,9 @@ export const createActivities = async (token, name, description) => {
 
 export const updateActivity = async (token, name, description, activityId) => {
   try {
-    const response = await fetch(`${apiURL}activities/${activityId}`,{
+    const response = await fetch(`${apiURL}activities/${activityId}`, {
       method: "PATCH",
-      headers:{
+      headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
@@ -113,26 +127,28 @@ export const updateActivity = async (token, name, description, activityId) => {
         name,
         description,
       }),
-    })
+    });
 
-    const data = response.json()
-    return data
+    const data = response.json();
+    return data;
   } catch (error) {
-    console.error("error", error)
+    console.error("error", error);
   }
-}
+};
 
-export const getPublicRoutinesByActivity = async(activityId)=>{
-  try{
-    const response = await fetch(`${apiURL}}activities/${activityId}/routines`, {
-    headers: {
-      "Content-Type": "application/json",
-    }
-    })
-    const data = response.json()
-    return data
-  } catch(error){
-    console.error("error", error)
+export const getPublicRoutinesByActivity = async (activityId) => {
+  try {
+    const response = await fetch(
+      `${apiURL}}activities/${activityId}/routines`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.error("error", error);
   }
-}
-
+};
