@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getActivities } from "../api";
-import AuthProvider from "./AuthProvider";
+import CreateActivities from "./CreateActivities";
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
@@ -15,15 +15,21 @@ const Activities = () => {
     fetchActivities();
   }, []);
 
+
+
   return (
     <>
       <h1>Activities</h1>
-
+      <CreateActivities activities={activities} setActivities={setActivities}/>
       {activities.map((activity) => (
         <div key={activity.id}>
-            <h2>{activity.name}</h2>
-            <h4>{activity.description}</h4>
-            <h2>------------------------------</h2>
+          <ul>
+            <li>
+              <h2>{activity.name}</h2>
+            </li>
+          </ul>
+          <h4>{activity.description}</h4>
+          <h2>------------------------------</h2>
         </div>
       ))}
     </>
