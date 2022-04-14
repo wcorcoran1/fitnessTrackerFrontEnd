@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Activities from "./components/Activities";
 import Routines from "./components/Routines";
+import MyRoutines from "./components/MyRoutines"
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -36,6 +37,10 @@ const App = () => {
         <Route 
           path="/routines"
           element={<Routines />}
+        />
+         <Route 
+          path="/myRoutines"
+          element={<MyRoutines />}
         />
       </Routes>
     </div>

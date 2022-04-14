@@ -136,16 +136,37 @@ export const updateActivity = async (token, name, description, activityId) => {
   }
 };
 
-export const getPublicRoutinesByActivity = async (activityId) => {
+// export const getPublicRoutinesByActivity = async (activityId) => {
+//   try {
+//     const response = await fetch(
+//       `${apiURL}}activities/${activityId}/routines`,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
+//     const data = response.json();
+//     return data;
+//   } catch (error) {
+//     console.error("error", error);
+//   }
+// };
+export const createRoutine = async (token, name, goal, isPublic) => {
   try {
-    const response = await fetch(
-      `${apiURL}}activities/${activityId}/routines`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${apiURL}routines`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name,
+        goal,
+        isPublic,
+      }),
+    });
+
     const data = response.json();
     return data;
   } catch (error) {
