@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import Home from "./components/Home";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import Activities from "./components/Activities";
-import Routines from "./components/Routines";
-import MyRoutines from "./components/MyRoutines"
-
+import {
+  NavBar,
+  Home,
+  SignUp,
+  Login,
+  Activities,
+  Routines,
+  MyRoutines,
+} from "./components";
+import { getRoutines } from "./api";
 const App = () => {
   const [token, setToken] = useState("");
+  const [routines, setRoutines] = useState([]);
+
+  useEffect(() => {
+    const fetchRoutines = async () => {
+      const data = await getRoutines();
+      setRoutines(data);
+    };
+    fetchRoutines();
+  }, [setRoutines]);
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
@@ -21,26 +32,26 @@ const App = () => {
       <NavBar />
       <div className="main_title">Welcome to Fitness Tracker</div>
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/sign-up"
           element={<SignUp token={token} setToken={setToken} />}
         />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/activities" element={<Activities />} />
         <Route
-          path="/Login"
-          element={<Login />}
-        />
-         <Route
-          path="/activities"
-          element={<Activities />}
-        />
-        <Route 
           path="/routines"
-          element={<Routines />}
+          element={<Routines routines={routines} setRoutines={setRoutines} />}
         />
-         <Route 
+        <Route
           path="/myRoutines"
-          element={<MyRoutines />}
+          element={
+            <MyRoutines
+              routines={routines}
+              setRoutines={setRoutines}
+              token={token}
+            />
+          }
         />
       </Routes>
     </div>

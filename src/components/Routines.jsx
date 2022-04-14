@@ -1,17 +1,5 @@
-import { useState, useEffect } from "react";
-import { getRoutines } from "../api";
-
-const Routines = () => {
-  const [routines, setRoutines] = useState([]);
-
-  useEffect(() => {
-    const fetchRoutines = async () => {
-      const data = await getRoutines();
-      setRoutines(data);
-    };
-    fetchRoutines();
-  }, [setRoutines]);
-
+const Routines = ({routines}) => {
+console.log("routines from routines.jsx", routines)
   return (
     <>
       <h1>Routines</h1>
@@ -30,8 +18,8 @@ const Routines = () => {
               </li>
             </ul>
             </ul>
-          {routine.activities.map((routineActivity) => (
-            <ul>
+          {routine.activities && routine.activities.map((routineActivity) => (
+            <ul key={routineActivity.id}>
               <h4>-------------------</h4>
               <li>
                 <h4>Activity: {routineActivity.name}</h4>
