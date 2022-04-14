@@ -32,8 +32,8 @@ const Activities = () => {
             </li>
           </ul>
           <h4>{activity.description}</h4>
-          <h4>View Routines with this Activity</h4>
-          {/* <UpdateActivity
+          {/* <h4>View Routines with this Activity</h4>
+          <UpdateActivity
             activityId={activity.id}
             activities={activity}
             setActivities={setActivities}
