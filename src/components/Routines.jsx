@@ -17,7 +17,6 @@ const Routines = () => {
       <h1>Routines</h1>
       {routines.map((routine) => (
         <div key={routine.id}>
-          {routine.activities ? console.log(routine, "Routine Obj") : null}
           <ul>
             <li>
               <h2>{routine.name}</h2>
@@ -30,13 +29,14 @@ const Routines = () => {
                 <h4>Created By: {routine.creatorName}</h4>
               </li>
             </ul>
-          </ul>
+            </ul>
           {routine.activities.map((routineActivity) => (
             <ul>
               <h4>-------------------</h4>
               <li>
                 <h4>Activity: {routineActivity.name}</h4>
               </li>
+              <ul>
               <li>
                 <h4>Description: {routineActivity.description}</h4>
               </li>
@@ -46,6 +46,7 @@ const Routines = () => {
               <li>
                 <h4>Count: {routineActivity.count}</h4>
               </li>
+              </ul>
             </ul>
           ))}
 

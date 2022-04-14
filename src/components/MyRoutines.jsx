@@ -4,7 +4,7 @@ import { createRoutine } from "../api";
 const CreateRoutines = ({ token, routines, setRoutines }) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
-  const [isPublic, setIsPublic] = useState(null);
+  const [isPublic, setIsPublic] = useState(false);
 
   const authenticated = localStorage.getItem("token") ? true : false;
 
@@ -15,7 +15,7 @@ const CreateRoutines = ({ token, routines, setRoutines }) => {
     setRoutines([data, ...routines]);
     setName("");
     setGoal("");
-    // setIsPublic('')
+     setIsPublic(false)
   };
 
   useEffect(() => {}, [token]);
