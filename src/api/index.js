@@ -49,23 +49,106 @@ export const myData = async (token) => {
   }
 };
 
-export const userRoutine = async (token) => {
-  if (token) {
-    const response = await fetch(`${apiURL}users/${username}/routines`, {
+export const userRoutine = async (username, token) => {
+  try {
+    if (token) {
+      const response = await fetch(`${apiURL}users/${username}/routines`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.json();
+      return data;
+    } else {
+      const response = await fetch(`${apiURL}users/${username}/routines`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("error");
+  }
+};
+
+export const getActivities = async () => {
+  const response = await fetch(`${apiURL}activities`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = response.json();
+  return data;
+};
+
+export const getRoutines = async () => {
+  const response = await fetch(`${apiURL}routines`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = response.json();
+  return data;
+};
+
+export const createActivities = async (token, name, description) => {
+  try {
+    const response = await fetch(`${apiURL}activities`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        name,
+        description,
+      }),
     });
+
     const data = response.json();
     return data;
-  } else {
-    const response = await fetch(`${apiURL}users/${username}/routines`, {
+  } catch (error) {
+    console.error("error", error);
+  }
+};
+
+export const updateActivity = async (token, name, description, activityId) => {
+  try {
+    const response = await fetch(`${apiURL}activities/${activityId}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        name,
+        description,
+      }),
     });
-    const data = response.json()
-    return data
+
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.error("error", error);
+  }
+};
+
+export const getPublicRoutinesByActivity = async (activityId) => {
+  try {
+    const response = await fetch(
+      `${apiURL}}activities/${activityId}/routines`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.error("error", error);
   }
 };

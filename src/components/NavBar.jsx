@@ -16,12 +16,14 @@ const NavBar = ({ token }) => {
 
           <>
             <Link to={"/sign-up"}>Sign Up</Link>
+            <Link to={"/Login"}>Login</Link>
+            <Link to={"/Activities"}>Activities</Link>
+            <Link to={"/Routines"}>Routines</Link>
           </>
-          <Link to={"/Login"}>Login</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default NavBar
+export default NavBar;
