@@ -3,7 +3,7 @@
 //bring user id and compare creator id on
 
 import { useState, useEffect } from "react";
-import { createRoutine, updateRoutine, userLogin } from "../api";
+import { createRoutine, updateRoutine} from "../api";
 
 const MyRoutines = ({ token, routines, setRoutines }) => {
   const [name, setName] = useState("");
@@ -25,18 +25,18 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
     setIsPublic(false);
   };
 
-  // const showMyRoutines = async (e) => {
-  //   e.preventDefault()
-  //   const data = await userLogin()
-  //   const userObject = data.user
-  //   const filteredRoutines = routines.filter((routine) => {
-  //     return routine.creatorId !== userObject.id
-  //   })
-  //   const newArr = [...filteredRoutines, data.routine]
-  //   setRoutines(newArr);
-  // }
+  const showMyRoutines = async (e) => {
+    e.preventDefault()
+    
+    const username = localStorage.getItem("username")  
+    const filteredRoutines = routines.filter((routine) => {
+      return routine.creatorName !== username
+    })
+    const newArr = [...filteredRoutines, routines]
+    setRoutines(newArr);
+  }
 
-  useEffect(() => {}, [token]);
+  useEffect(() => {showMyRoutines()}, [token]);
 
   // const onUpdate = async () => {
   //   e.preventDefault()
