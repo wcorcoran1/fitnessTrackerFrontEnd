@@ -5,7 +5,7 @@
 import { useState, useEffect } from "react";
 import { createRoutine, getRoutines, updateRoutine} from "../api";
 
-const MyRoutines = ({ token, routines, setRoutines, username }) => {
+const MyRoutines = ({ token, routines, setRoutines }) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [isPublic, setIsPublic] = useState(false);
@@ -26,6 +26,7 @@ const MyRoutines = ({ token, routines, setRoutines, username }) => {
   };
   useEffect(()=>{
     const filterMyRoutines = ()=>{
+      const username = localStorage.getItem("username")  
       const filteredRoutines = routines.filter((routine) => {
          console.log( routine, "ROUTINES");
         return routine.creatorName == username
