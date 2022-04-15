@@ -3,15 +3,15 @@
 //bring user id and compare creator id on
 
 import { useState, useEffect } from "react";
-import { createRoutine, updateRoutine} from "../api";
+import { createRoutine, getRoutines, updateRoutine} from "../api";
 
-const MyRoutines = ({ token, routines, setRoutines }) => {
+const MyRoutines = ({ token, routines, setRoutines, username }) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-
+  const [myRoutines, setMyRoutines] = useState(routines)
   const authenticated = localStorage.getItem("token") ? true : false;
-
+  
   const onCreate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
@@ -24,19 +24,29 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
     setGoal("");
     setIsPublic(false);
   };
+  useEffect(()=>{
+    const filterMyRoutines = ()=>{
+      const filteredRoutines = routines.filter((routine) => {
+         console.log( routine, "ROUTINES");
+        return routine.creatorName == username
+      })
+      setMyRoutines(filteredRoutines)
+      console.log(myRoutines)
+    }
+    filterMyRoutines()
+  },[routines, token])
+  // const showMyRoutines = () => {
+  //   const username = localStorage.getItem("username")  
+  //   const filteredRoutines = routines.filter((routine) => {
+  //      console.log( routine, "ROUTINES");
+  //     return routine.creatorName == username
+  //   })
+  //   const newArr = [...filteredRoutines, routines]
+  //   setRoutines(newArr);
+  //   console.log("ARRAY !!!!!!",filteredRoutines)
+  // }
 
-  const showMyRoutines = async (e) => {
-    e.preventDefault()
-    
-    const username = localStorage.getItem("username")  
-    const filteredRoutines = routines.filter((routine) => {
-      return routine.creatorName !== username
-    })
-    const newArr = [...filteredRoutines, routines]
-    setRoutines(newArr);
-  }
-
-  useEffect(() => {showMyRoutines()}, [token]);
+  // useEffect(() => {showMyRoutines()}, [token ]);
 
   // const onUpdate = async () => {
   //   e.preventDefault()
@@ -74,8 +84,8 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
           </form>
           <>
             <h1>My Routines</h1>
-            {routines && routines.length
-              ? routines.map((myRoutine) => (
+            {myRoutines.length
+              ? myRoutines.map((myRoutine) => (
                   <div key={myRoutine.id}>
                     <ul>
                       <li>

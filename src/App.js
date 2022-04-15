@@ -10,17 +10,18 @@ import {
   MyRoutines,
 } from "./components";
 import { getRoutines } from "./api";
+
 const App = () => {
   const [token, setToken] = useState("");
   const [routines, setRoutines] = useState([]);
-
+  const [user, setUser] = useState("")
   useEffect(() => {
     const fetchRoutines = async () => {
       const data = await getRoutines();
       setRoutines(data);
     };
     fetchRoutines();
-  }, [setRoutines]);
+  }, []);
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
@@ -50,6 +51,7 @@ const App = () => {
               routines={routines}
               setRoutines={setRoutines}
               token={token}
+              user={user}
             />
           }
         />
