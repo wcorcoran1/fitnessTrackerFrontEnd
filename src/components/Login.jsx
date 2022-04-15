@@ -12,7 +12,9 @@ const Login = ({ setToken }) => {
     localStorage.setItem("token", result.token);
     console.log(localStorage, "Token added!")
     setLoginStatus(true)
-    console.log("User Object from login", result.user.id)
+    const userObject = result.user
+    localStorage.setItem("username", username)
+    console.log("User Object from login", userObject.id)
   };
 
   const onLogOut = async (e) => {

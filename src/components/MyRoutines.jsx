@@ -1,9 +1,9 @@
 // if currentUserId === creatorId of routine, show
 // create a routine see if it match user id
-//bring user id and compare creator id on routines
+//bring user id and compare creator id on
 
 import { useState, useEffect } from "react";
-import { createRoutine, updateRoutine } from "../api";
+import { createRoutine, updateRoutine, userLogin } from "../api";
 
 const MyRoutines = ({ token, routines, setRoutines }) => {
   const [name, setName] = useState("");
@@ -16,12 +16,25 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const data = await createRoutine(token, name, goal, isPublic);
+    const username = localStorage.getItem("username")
+    data.creatorName = username   
     console.log(data, routines, "ROUTINES");
     setRoutines([data, ...routines]);
     setName("");
     setGoal("");
     setIsPublic(false);
   };
+
+  // const showMyRoutines = async (e) => {
+  //   e.preventDefault()
+  //   const data = await userLogin()
+  //   const userObject = data.user
+  //   const filteredRoutines = routines.filter((routine) => {
+  //     return routine.creatorId !== userObject.id
+  //   })
+  //   const newArr = [...filteredRoutines, data.routine]
+  //   setRoutines(newArr);
+  // }
 
   useEffect(() => {}, [token]);
 
@@ -60,46 +73,50 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
             <button type="submit">Create Routine</button>
           </form>
           <>
-            <h1>Routines</h1>
-            {routines.map((routine) => (
-              <div key={routine.id}>
-                <ul>
-                  <li>
-                    <h2>{routine.name}</h2>
-                  </li>
-                  <ul>
-                    <li>
-                      <h4>Goal: {routine.goal}</h4>
-                    </li>
-                    <li>
-                      <h4>Created By: {routine.creatorName}</h4>
-                    </li>
-                  </ul>
-                </ul>
-                {routine.activities &&
-                  routine.activities.map((routineActivity) => (
-                    <ul key={routineActivity.id}>
-                      <h4>-------------------</h4>
+            <h1>My Routines</h1>
+            {routines && routines.length
+              ? routines.map((myRoutine) => (
+                  <div key={myRoutine.id}>
+                    <ul>
                       <li>
-                        <h4>Activity: {routineActivity.name}</h4>
+                        <h2>{myRoutine.name}</h2>
                       </li>
                       <ul>
                         <li>
-                          <h4>Description: {routineActivity.description}</h4>
+                          <h4>Goal: {myRoutine.goal}</h4>
                         </li>
                         <li>
-                          <h4>Duration: {routineActivity.duration}</h4>
-                        </li>
-                        <li>
-                          <h4>Count: {routineActivity.count}</h4>
+                          <h4>Created By: {myRoutine.creatorName}</h4>
                         </li>
                       </ul>
                     </ul>
-                  ))}
+                    {myRoutine.activities &&
+                      myRoutine.activities.map((myRoutineActivity) => (
+                        <ul key={myRoutineActivity.id}>
+                          <h4>-------------------</h4>
+                          <li>
+                            <h4>Activity: {myRoutineActivity.name}</h4>
+                          </li>
+                          <ul>
+                            <li>
+                              <h4>
+                                Description: {myRoutineActivity.description}
+                              </h4>
+                            </li>
+                            <li>
+                              <h4>Duration: {myRoutineActivity.duration}</h4>
+                            </li>
+                            <li>
+                              <h4>Count: {myRoutineActivity.count}</h4>
+                            </li>
+                          </ul>
+                        </ul>
+                      ))}
 
-                <h1>--------------------------</h1>
-              </div>
-            ))}
+                    <h1>--------------------------</h1>
+                  </div>
+                ))
+              : null}
           </>
         </>
       ) : (
