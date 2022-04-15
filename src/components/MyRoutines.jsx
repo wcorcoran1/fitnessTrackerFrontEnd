@@ -3,57 +3,43 @@
 //bring user id and compare creator id on
 
 import { useState, useEffect } from "react";
-import { createRoutine, getRoutines, updateRoutine} from "../api";
+import { createRoutine, deleteRoutine, getRoutines, updateRoutine } from "../api";
 
 const MyRoutines = ({ token, routines, setRoutines }) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const [myRoutines, setMyRoutines] = useState(routines)
+  const [myRoutines, setMyRoutines] = useState(routines);
   const authenticated = localStorage.getItem("token") ? true : false;
-  
+
+  console.log(myRoutines, "MY ROUTINES!!")
+
   const onCreate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const data = await createRoutine(token, name, goal, isPublic);
-    const username = localStorage.getItem("username")
-    data.creatorName = username   
+    const username = localStorage.getItem("username");
+    data.creatorName = username;
     console.log(data, routines, "ROUTINES");
     setRoutines([data, ...routines]);
     setName("");
     setGoal("");
     setIsPublic(false);
   };
-  useEffect(()=>{
-    const filterMyRoutines = ()=>{
-      const username = localStorage.getItem("username")  
+  useEffect(() => {
+    const filterMyRoutines = () => {
+      const username = localStorage.getItem("username");
       const filteredRoutines = routines.filter((routine) => {
-         console.log( routine, "ROUTINES");
-        return routine.creatorName == username
-      })
-      setMyRoutines(filteredRoutines)
-      console.log(myRoutines)
-    }
-    filterMyRoutines()
-  },[routines, token])
-  // const showMyRoutines = () => {
-  //   const username = localStorage.getItem("username")  
-  //   const filteredRoutines = routines.filter((routine) => {
-  //      console.log( routine, "ROUTINES");
-  //     return routine.creatorName == username
-  //   })
-  //   const newArr = [...filteredRoutines, routines]
-  //   setRoutines(newArr);
-  //   console.log("ARRAY !!!!!!",filteredRoutines)
-  // }
+        return routine.creatorName == username;
+      });
+      setMyRoutines(filteredRoutines);
+    };
+    filterMyRoutines();
+  }, [routines, token]);
 
-  // useEffect(() => {showMyRoutines()}, [token ]);
-
-  // const onUpdate = async () => {
-  //   e.preventDefault()
-  //   const token = localStorage.getItem("token")
-  //   const data = await updateRoutine(token, name, goal, isPublic, routineId)
-  // }
+  const onDelete = async (token, routineId) => {
+    const data = await deleteRoutine(token, routineId)
+  }
 
   return (
     <div>
