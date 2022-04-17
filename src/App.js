@@ -15,6 +15,8 @@ const App = () => {
   const [token, setToken] = useState("");
   const [routines, setRoutines] = useState([]);
   const [user, setUser] = useState("")
+  
+  
   useEffect(() => {
     const fetchRoutines = async () => {
       const data = await getRoutines();
@@ -22,12 +24,12 @@ const App = () => {
     };
     fetchRoutines();
   }, []);
-
+  
   useEffect(() => {
     const localToken = localStorage.getItem("token");
     localToken ? setToken(localToken) : console.log("Trouble setting token...");
   }, [token]);
-
+  
   return (
     <div className="main_container">
       <NavBar />
@@ -37,24 +39,24 @@ const App = () => {
         <Route
           path="/sign-up"
           element={<SignUp token={token} setToken={setToken} />}
-        />
+          />
         <Route path="/Login" element={<Login />} />
         <Route path="/activities" element={<Activities />} />
         <Route
           path="/routines"
           element={<Routines routines={routines} setRoutines={setRoutines} />}
-        />
+          />
         <Route
           path="/myRoutines"
           element={
             <MyRoutines
-              routines={routines}
-              setRoutines={setRoutines}
-              token={token}
-              user={user}
+            routines={routines}
+            setRoutines={setRoutines}
+            token={token}
+            user={user}
             />
           }
-        />
+          />
       </Routes>
     </div>
   );
