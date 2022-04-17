@@ -1,5 +1,4 @@
 const Routines = ({routines}) => {
-console.log("routines from routines.jsx", routines)
   return (
     <>
       <h1>Routines</h1>

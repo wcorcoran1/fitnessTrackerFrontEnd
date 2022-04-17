@@ -4,13 +4,16 @@ import { registerUser } from "../api";
 const SignUp = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [signMessage, setSignMessage] = useState({});
 
-  const onSignUp = async(e) => {
+  const onSignUp = async (e) => {
     e.preventDefault();
     const result = await registerUser(username, password);
-    console.log(result)
+    if (result.error) {
+      setSignMessage(result);
+    }
     localStorage.setItem("token", result.token);
-    localStorage.setItem("username", username)
+    localStorage.setItem("username", username);
     const myToken = result.token;
     setToken(myToken);
   };
@@ -28,7 +31,7 @@ const SignUp = ({ setToken }) => {
         />
         <input
           value={password}
-          type="text"
+          type="password"
           placeholder="password"
           onChange={(e) => {
             setPassword(e.target.value);
@@ -36,6 +39,12 @@ const SignUp = ({ setToken }) => {
         />
         <button type="submit">Sign Up</button>
       </form>
+      {signMessage.error ? (
+        <>
+          <h3>{signMessage.name}</h3>
+          <p>{signMessage.message}</p>
+        </>
+      ) : null}
     </div>
   );
 };
