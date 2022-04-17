@@ -5,14 +5,16 @@
 import { useState, useEffect } from "react";
 import { createRoutine, deleteRoutine, getRoutines, updateRoutine } from "../api";
 
+
 const MyRoutines = ({ token, routines, setRoutines }) => {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [myRoutines, setMyRoutines] = useState(routines);
+  const [ME, setMe]=useState(null)
   const authenticated = localStorage.getItem("token") ? true : false;
 
-  console.log(myRoutines, "MY ROUTINES!!")
+  // console.log(myRoutines, "MY ROUTINES!!")
 
   const onCreate = async (e) => {
     e.preventDefault();
@@ -39,6 +41,9 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
 
   const onDelete = async (token, routineId) => {
     const data = await deleteRoutine(token, routineId)
+    console.log("data",routineId)
+    setMyRoutines([data, ...myRoutines])
+    // setMyRoutines(myRoutines.filter(()=>{routineId !== ME}))
   }
 
   return (
@@ -109,7 +114,7 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
                           </ul>
                         </ul>
                       ))}
-
+                    <button id="deleteButton"type="delete" value={myRoutine} onClick={(e)=> onDelete(token, e.target.parentElement.value)}>Delete Routine</button>
                     <h1>--------------------------</h1>
                   </div>
                 ))
