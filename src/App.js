@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import Home from "./components/Home";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import Activities from "./components/Activities";
-import Routines from "./components/Routines";
+import {
+  NavBar,
+  Home,
+  SignUp,
+  Login,
+  Activities,
+  Routines,
+  MyRoutines,
+} from "./components";
+import { getRoutines } from "./api";
 
 const App = () => {
   const [token, setToken] = useState("");
+  const [routines, setRoutines] = useState([]);
+  const [user, setUser] = useState("")
+  useEffect(() => {
+    const fetchRoutines = async () => {
+      const data = await getRoutines();
+      setRoutines(data);
+    };
+    fetchRoutines();
+  }, []);
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
@@ -20,22 +33,27 @@ const App = () => {
       <NavBar />
       <div className="main_title">Welcome to Fitness Tracker</div>
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/sign-up"
           element={<SignUp token={token} setToken={setToken} />}
         />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/activities" element={<Activities />} />
         <Route
-          path="/Login"
-          element={<Login />}
-        />
-         <Route
-          path="/activities"
-          element={<Activities />}
-        />
-        <Route 
           path="/routines"
-          element={<Routines />}
+          element={<Routines routines={routines} setRoutines={setRoutines} />}
+        />
+        <Route
+          path="/myRoutines"
+          element={
+            <MyRoutines
+              routines={routines}
+              setRoutines={setRoutines}
+              token={token}
+              user={user}
+            />
+          }
         />
       </Routes>
     </div>

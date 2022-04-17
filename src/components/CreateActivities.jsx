@@ -19,7 +19,7 @@ const CreateActivities = ({ token, activities, setActivities }) => {
   useEffect(() => {}, [token]);
 
   return (
-    <div>
+    <div key={activities.id}>
       {authenticated === true ? (
         <>
           <h3>Create an Activity</h3>
