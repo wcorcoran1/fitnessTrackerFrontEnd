@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 import {
   createRoutine,
   deleteRoutine,
-  getRoutines,
-  updateRoutine,
 } from "../api";
 
 const MyRoutines = ({ token, routines, setRoutines }) => {
@@ -25,7 +23,6 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
     const data = await createRoutine(token, name, goal, isPublic);
     const username = localStorage.getItem("username");
     data.creatorName = username;
-    console.log(data, routines, "ROUTINES");
     setRoutines([data, ...routines]);
     setName("");
     setGoal("");
@@ -40,9 +37,11 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
       setMyRoutines(filteredRoutines);
     };
     filterMyRoutines();
-  }, [routines, token]);
+  }, [routines, token, myRoutines]);
 
-  
+  const onDelete = async (token ,routineId) => {
+    const data = await deleteRoutine(token, routineId)
+  }
 
   return (
     <div>
@@ -90,6 +89,7 @@ const MyRoutines = ({ token, routines, setRoutines }) => {
                         </li>
                       </ul>
                     </ul>
+                    <button onClick={() => onDelete(token, myRoutine.id)}>Delete Routine</button>
                     {myRoutine.activities &&
                       myRoutine.activities.map((myRoutineActivity) => (
                         <ul key={myRoutineActivity.id}>

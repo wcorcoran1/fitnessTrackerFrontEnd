@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { userLogin } from "../api";
 
-const Login = ({ setToken }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
@@ -14,7 +14,6 @@ const Login = ({ setToken }) => {
       setLoginMessage(result);
     }
     localStorage.setItem("token", result.token);
-    console.log(localStorage, "Token added!")
     setLoginStatus(true)
     localStorage.setItem("username", username)
    
@@ -24,7 +23,6 @@ const Login = ({ setToken }) => {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("username")
-    console.log(localStorage, "Token removed!");
     setLoginStatus(false);
   };
 

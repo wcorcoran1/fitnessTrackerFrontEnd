@@ -4,6 +4,7 @@ import { createActivities } from "../api";
 const CreateActivities = ({ token, activities, setActivities }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [activityMessage, setActivityMessage] = useState({});
 
   const authenticated = localStorage.getItem("token") ? true : false;
 
@@ -11,9 +12,12 @@ const CreateActivities = ({ token, activities, setActivities }) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const data = await createActivities(token, name, description);
+    if (data.error) {
+      setActivityMessage(data);
+    }
     setActivities([data, ...activities]);
-    setName('')
-    setDescription('')
+    setName("");
+    setDescription("");
   };
 
   useEffect(() => {}, [token]);
@@ -38,6 +42,12 @@ const CreateActivities = ({ token, activities, setActivities }) => {
             />
             <button type="submit">Create Activity</button>
           </form>
+          {activityMessage.error ? (
+            <>
+              <h3>{activityMessage.message}</h3>
+              <h5>_____________________</h5>
+            </>
+          ) : null}
         </>
       ) : (
         <h3>Login or Sign Up to Create a Post</h3>

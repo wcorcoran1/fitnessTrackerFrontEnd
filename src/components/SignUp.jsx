@@ -9,7 +9,6 @@ const SignUp = ({ setToken }) => {
   const onSignUp = async (e) => {
     e.preventDefault();
     const result = await registerUser(username, password);
-    console.log(result);
     if (result.error) {
       setSignMessage(result);
     }
